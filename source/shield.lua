@@ -32,7 +32,7 @@ function Shield:new(x, y)
     self.transform.size.width,
     self.transform.size.height
   )
-  self.tag = "shield"
+  self.hitbox.tag = "shield"
 end
 
 function Shield:update(deltaTime)  

@@ -6,7 +6,7 @@ function Spear:new(x, y, direction, speed)
   self.destroyed = false
   self.transform = Transform(x, y, 16, 32)
   self.direction = direction
-  self.speed = 64
+  self.speed = speed
   
   self.velocity = {}
   self.velocity.x = 0
@@ -34,10 +34,11 @@ function Spear:update(deltaTime)
   self.hitbox:moveTo(self.transform.position.x, self.transform.position.y)
   
   -- check for collisions
-  for other, delta in pairs(HC.collisions(self.hitbox)) do
-    print(other.tag)
-    
-    self.destroyed = true
+  for other, delta in pairs(HC.collisions(self.hitbox)) do    
+    if other.tag == "shield" or other.tag == "player" then
+      self.destroyed = true
+      self.onDestroy()
+    end
   end
 end
 
@@ -63,4 +64,8 @@ function Spear:draw()
       self.transform.size.height
     )
   love.graphics.pop()
+end
+
+function Spear:onDestroy()
+  
 end

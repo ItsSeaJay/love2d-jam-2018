@@ -14,7 +14,7 @@ function Transform:new(x, y, width, height)
   self.size.height = height
   
   -- origin
-  -- default origin to the center of the object
+  -- default it to the center of the object
   self.origin = {}
   self.origin.x = -self.size.width / 2
   self.origin.y = -self.size.height / 2

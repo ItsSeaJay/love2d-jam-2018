@@ -1,7 +1,5 @@
 -- main.lua
 
-console = {}
-
 function love.load()
   -- requirements
   -- 3rd party
@@ -11,11 +9,11 @@ function love.load()
   -- 1st party
   require "transform"
   require "player"
+  require "army"
   require "spear"
   require "shield"
   require "lerp"
   
-  -- game
   game = {}
   game.title = "LÖVE Jam 2018"
   
@@ -23,18 +21,7 @@ function love.load()
   
   -- player
   player = Player(love.graphics.getWidth() / 2, love.graphics.getHeight() / 2)
-  
-  -- projectiles
-  projectiles = {}
-  table.insert(
-    projectiles,
-    Spear(
-      32,
-      love.graphics.getHeight() / 2,
-      90,
-      32
-    )
-  )
+  army = Army()
   
   -- debug
   debug = true
@@ -54,13 +41,7 @@ function love.update(deltaTime)
   
   -- update game objects
   player:update(deltaTime)
-  
-  -- update projectiles
-  for i = #projectiles, 1, -1 do
-    local projectile = projectiles[i]
-    
-    projectile:update(deltaTime)
-  end
+  army:update(deltaTime)
   
   -- destroy marked objects
   love.teardown()
@@ -75,22 +56,7 @@ function love.draw()
   -- draw game objects
   love.graphics.setColor(255, 255, 255)
   player:draw()
-  
-  -- draw projectiles
-  for i = #projectiles, 1, -1 do
-    local projectile = projectiles[i]
-    
-    projectile:draw()
-  end
 end
 
 function love.teardown()
-  -- remove destroyed particles
-  for i = #projectiles, 1, -1 do
-    local projectile = projectiles[i]
-    
-    if projectile.destroyed then
-      table.remove(projectiles, i)
-    end
-  end
 end
