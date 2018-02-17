@@ -16,8 +16,8 @@ function Army:new()
     1
   )
   self.points.bottom = Transform(
-    love.graphics.getHeight() + 32,
     love.graphics.getWidth() / 2,
+    love.graphics.getHeight() + 32,
     1,
     1
   )
@@ -42,12 +42,32 @@ function Army:update(deltaTime)
       table.insert(
         self.troops,
         Spear(
+          self.points.bottom.position.x,
+          self.points.bottom.position.y,
           0,
-          0,
-          0,
-          32
+          128
         )
       )
     end
+  end
+  
+  -- update all troops
+  for key, troop in ipairs(self.troops) do
+    troop:update(deltaTime)
+  end
+  
+  -- remove destroyed troops
+  for i = #self.troops, -1 do
+    troop = self.troops[i]
+    
+    if troop.destroyed then
+      table.remove(self.troops, i)
+    end
+  end
+end
+
+function Army:draw(deltaTime)
+  for key, troop in ipairs(self.troops) do
+    troop:draw()
   end
 end

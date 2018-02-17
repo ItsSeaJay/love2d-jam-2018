@@ -56,6 +56,7 @@ function love.draw()
   -- draw game objects
   love.graphics.setColor(255, 255, 255)
   player:draw()
+  army:draw()
 end
 
 function love.teardown()
