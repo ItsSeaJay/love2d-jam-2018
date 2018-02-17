@@ -20,28 +20,36 @@ function Shield.new(self)
   self.size.height = 32
   
   self.origin = {}
-  self.origin.x = self.size.width / 2
-  self.origin.y = self.size.height / 2
+  self.origin.x = -self.size.width / 2
+  self.origin.y = -self.size.height / 2 - 64
   
-  self.direction = 0 -- Measured in degrees
+  self.direction = {}
+  self.direction.current = 0 -- Measured in degrees
+  self.direction.target = 0
 end
 
 function Shield.update(self, delta)  
   if self.state == self.states.up then
     -- up state
-    self.direction = self.direction + 1 * delta
+    self.direction.target = 0
   elseif self.state == self.states.down then
     -- down state
-    self.direction = self.direction + 1 * delta
+    self.direction.target = 180
   elseif self.state == self.states.left then
     -- left state
-    self.direction = self.direction + 1 * delta
+    self.direction.target = 90
   elseif self.state == self.states.right then
     -- right state
-    self.direction = self.direction + 1 * delta
+    self.direction.target = 90
   else
     -- default
   end
+  
+  self.direction.current = maths.lerp(
+    self.direction.current,
+    self.direction.target,
+    1 * delta
+  )
 end
 
 function Shield.draw(self)
@@ -49,11 +57,11 @@ function Shield.draw(self)
   
   love.graphics.push()
     love.graphics.translate(self.position.x, self.position.y)
-    love.graphics.rotate(self.direction)
+    love.graphics.rotate(math.rad(self.direction.current))
     love.graphics.rectangle(
       "fill",
-      -self.size.width / 2,
-      -self.size.height / 2,
+      self.origin.x,
+      self.origin.y,
       self.size.width,
       self.size.height
     )
