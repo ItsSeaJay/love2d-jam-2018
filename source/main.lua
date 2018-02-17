@@ -1,5 +1,7 @@
 -- main.lua
 
+local classic = require('classic')
+
 function love.load()
   
 end
