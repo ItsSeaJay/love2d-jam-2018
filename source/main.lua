@@ -12,7 +12,7 @@ function love.load()
   
   -- game
   game = {}
-  game.title = "LOVE Jam 2018"
+  game.title = "LÖVE Jam 2018"
   
   love.window.setTitle(game.title)
   
@@ -21,7 +21,7 @@ function love.load()
   
   -- enemies
   enemies = {}
-  enemies.test = Spear(love.graphics.getWidth() / 2, 32)
+  enemies.test = Spear(love.graphics.getWidth() / 2, -128)
   
   -- debug
   debug = true
@@ -39,8 +39,8 @@ function love.update(delta)
     end
   end
   
+  -- update game objects
   player:update(delta)
-  
   enemies.test:update(delta)
   
   -- destroy marked objects
@@ -48,8 +48,8 @@ function love.update(delta)
 end
 
 function love.draw()
+  -- draw game objects
   player:draw()
-  
   enemies.test:draw(delta)
 end
 

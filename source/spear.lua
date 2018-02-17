@@ -6,15 +6,21 @@ function Spear:new(x, y)
   self.destroyed = false
   self.transform = Transform(x, y, 16, 32)
   self.direction = 180
-  self.speed = 32
+  self.speed = 64
+  
+  self.velocity = {}
+  self.velocity.x = 0
+  self.velocity.y = 0
 end
 
 function Spear:update(delta)
-  -- move according to direction
-  self.transform.position.x = self.transform.position.x +
-    math.sin(math.rad(self.direction) * self.speed)
-  self.transform.position.y = self.transform.position.y +
-    math.cos(math.rad(self.direction) * self.speed)
+  -- move according to the spear's direction
+  -- measured in degrees, where 0 is up
+  self.velocity.x = math.sin(math.rad(self.direction)) * self.speed * delta
+  self.velocity.y = -math.cos(math.rad(self.direction)) * self.speed * delta
+  
+  self.transform.position.x = self.transform.position.x + self.velocity.x
+  self.transform.position.y = self.transform.position.y + self.velocity.y
 end
 
 function Spear:draw()
