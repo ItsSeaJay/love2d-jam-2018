@@ -1,12 +1,14 @@
 -- main.lua
 
-local classic = require('classic')
-
 function love.load()
+  require "shield"
   
+  shield = Shield()
+  
+  Object = require "classic"
 end
 
-function love.update()
+function love.update(delta)
   
 end
 
