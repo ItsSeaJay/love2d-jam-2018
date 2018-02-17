@@ -3,7 +3,8 @@
 Shield = Object:extend()
 
 function Shield.new(self)
-  self.test = math.random() * 6 + 1
+  self.x = 2
+  print(self.x)
 end
 
 function Shield.update()
@@ -11,5 +12,5 @@ function Shield.update()
 end
 
 function Shield.draw()
-  -- TODO: draw shield
+  
 end

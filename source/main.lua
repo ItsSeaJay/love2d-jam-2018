@@ -1,17 +1,21 @@
 -- main.lua
 
 function love.load()
+  Object = require "classic"
+  
   require "shield"
   
   shield = Shield()
-  
-  Object = require "classic"
 end
 
 function love.update(delta)
+  if love.keyboard.isDown("escape") then
+    love.event.quit()
+  end
   
+  shield.update()
 end
 
 function love.draw()
-  
+  shield.draw()
 end
