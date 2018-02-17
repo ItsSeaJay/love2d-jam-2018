@@ -2,10 +2,10 @@
 
 Spear = Object:extend()
 
-function Spear:new(x, y)
+function Spear:new(x, y, direction, speed)
   self.destroyed = false
   self.transform = Transform(x, y, 16, 32)
-  self.direction = 180
+  self.direction = direction
   self.speed = 64
   
   self.velocity = {}
@@ -30,10 +30,13 @@ function Spear:update(deltaTime)
   self.transform.position.x = self.transform.position.x + self.velocity.x
   self.transform.position.y = self.transform.position.y + self.velocity.y
   
+  self.hitbox:setRotation(math.rad(self.direction))
   self.hitbox:moveTo(self.transform.position.x, self.transform.position.y)
   
   -- check for collisions
   for other, delta in pairs(HC.collisions(self.hitbox)) do
+    print(other.tag)
+    
     self.destroyed = true
   end
 end

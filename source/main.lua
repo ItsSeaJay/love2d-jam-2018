@@ -26,7 +26,15 @@ function love.load()
   
   -- projectiles
   projectiles = {}
-  table.insert(projectiles, Spear(love.graphics.getWidth() / 2, 32))
+  table.insert(
+    projectiles,
+    Spear(
+      32,
+      love.graphics.getHeight() / 2,
+      90,
+      32
+    )
+  )
   
   -- debug
   debug = true
@@ -77,6 +85,7 @@ function love.draw()
 end
 
 function love.teardown()
+  -- remove destroyed particles
   for i = #projectiles, 1, -1 do
     local projectile = projectiles[i]
     
