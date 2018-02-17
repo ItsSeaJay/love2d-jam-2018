@@ -57,7 +57,9 @@ function Shield:update(deltaTime)
     self.direction.target,
     self.speed * deltaTime
   )
-  self.hitbox:rotate(self.direction.current)
+  
+  -- move hitbox with shield
+  self.hitbox:setRotation(math.rad(self.direction.current))
 end
 
 function Shield:draw()
@@ -83,4 +85,24 @@ function Shield:draw()
       self.transform.size.height
     )
   love.graphics.pop()
+end
+
+function rotateAround(cx, cy, angle)
+  local point = {}
+  point.x = 0
+  point.y = 0
+  
+  -- move the point to origin
+  point.x = point.x - cx
+  point.y = point.y - cy
+  
+  -- rotate around the point
+  xnew = point.x * math.cos(angle) - point.y * math.sin(angle)
+  ynew = point.x * math.sin(angle) + point.y * math.cos(angle)
+  
+  -- translate the point back to where it was
+  point.x = xnew + cx
+  point.y = ynew + cx
+  
+  return point
 end
