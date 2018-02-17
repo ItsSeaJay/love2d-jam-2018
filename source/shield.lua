@@ -9,7 +9,7 @@ function Shield:new()
   self.states.left = "left"
   self.states.right = "right"
   
-  self.state = self.states.left
+  self.state = self.states.up
   
   self.position = {}
   self.position.x = love.graphics.getWidth() / 2
@@ -26,6 +26,8 @@ function Shield:new()
   self.direction = {}
   self.direction.current = 0 -- Measured in degrees
   self.direction.target = 0
+  
+  self.speed = 8
 end
 
 function Shield:update(delta)  
@@ -37,18 +39,16 @@ function Shield:update(delta)
     self.direction.target = 180
   elseif self.state == self.states.left then
     -- left state
-    self.direction.target = 90
+    self.direction.target = 270
   elseif self.state == self.states.right then
     -- right state
     self.direction.target = 90
-  else
-    -- default
   end
   
   self.direction.current = maths.lerp(
     self.direction.current,
     self.direction.target,
-    1 * delta
+    self.speed * delta
   )
 end
 
