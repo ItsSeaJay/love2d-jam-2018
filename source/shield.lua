@@ -24,9 +24,17 @@ function Shield:new(x, y)
   self.states.right = "right"
   
   self.state = self.states.up
+  
+  -- hitbox
+  self.hitbox = HC.rectangle(
+    self.transform.position.x,
+    self.transform.position.y,
+    self.transform.size.width,
+    self.transform.size.height
+  )
 end
 
-function Shield:update(delta)  
+function Shield:update(deltaTime)  
   -- state machine
   if self.state == self.states.up then
     -- up state
@@ -45,7 +53,7 @@ function Shield:update(delta)
   self.direction.current = lerp.lerp(
     self.direction.current,
     self.direction.target,
-    self.speed * delta
+    self.speed * deltaTime
   )
 end
 

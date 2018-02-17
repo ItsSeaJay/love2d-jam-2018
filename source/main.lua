@@ -24,13 +24,13 @@ function love.load()
   
   -- enemies
   enemies = {}
-  enemies.test = Spear(love.graphics.getWidth() / 2, -256)
+  enemies.test = Spear(love.graphics.getWidth() / 2, -32)
   
   -- debug
   debug = true
 end
 
-function love.update(delta)
+function love.update(deltaTime)
   -- debug controls
   if debug then
     if love.keyboard.isDown("escape") then
@@ -43,8 +43,8 @@ function love.update(delta)
   end
   
   -- update game objects
-  player:update(delta)
-  enemies.test:update(delta)
+  player:update(deltaTime)
+  enemies.test:update(deltaTime)
   
   -- destroy marked objects
   love.teardown()

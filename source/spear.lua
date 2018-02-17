@@ -15,16 +15,16 @@ function Spear:new(x, y)
   self.hitbox = HC.rectangle(
     self.transform.position.x,
     self.transform.position.y,
-    self.transform.size.x,
-    self.transform.size.y
+    self.transform.size.width,
+    self.transform.size.height
   )
 end
 
-function Spear:update(delta)
+function Spear:update(deltaTime)
   -- move according to the spear's direction
   -- measured in degrees, where 0 is up
-  self.velocity.x = math.sin(math.rad(self.direction)) * self.speed * delta
-  self.velocity.y = -math.cos(math.rad(self.direction)) * self.speed * delta
+  self.velocity.x = math.sin(math.rad(self.direction)) * self.speed * deltaTime
+  self.velocity.y = -math.cos(math.rad(self.direction)) * self.speed * deltaTime
   
   self.transform.position.x = self.transform.position.x + self.velocity.x
   self.transform.position.y = self.transform.position.y + self.velocity.y
