@@ -3,7 +3,7 @@
 Player = Object:extend()
 
 function Player:new()
-  self.shield = Sheild()
+  self.shield = Shield()
 end
 
 function Player:update(delta)
@@ -11,5 +11,5 @@ function Player:update(delta)
 end
 
 function Player:draw()
-  self.sheild:draw()
+  self.shield:draw()
 end
