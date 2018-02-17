@@ -60,6 +60,15 @@ function Shield:update(deltaTime)
   
   -- move hitbox with shield
   self.hitbox:setRotation(math.rad(self.direction.current))
+  local pivot = rotateAround(
+    0,
+    64,
+    math.rad(self.direction.current)
+  )
+  self.hitbox:moveTo(
+    pivot.x + self.transform.position.x,
+    pivot.y + self.transform.position.y
+  )
 end
 
 function Shield:draw()
