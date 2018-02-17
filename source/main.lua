@@ -3,9 +3,11 @@
 function love.load()
   Object = require "classic"
   
+  require "player"
   require "shield"
   require "maths"
   
+  player = Player()
   shield = Shield()
   
   debug = true
@@ -23,9 +25,11 @@ function love.update(delta)
     end
   end
   
-  shield.update(shield, delta)
+  player:update(delta)
+  shield:update(delta)
 end
 
 function love.draw()
-  shield.draw(shield)
+  player:draw()
+  shield:draw()
 end

@@ -2,7 +2,7 @@
 
 Shield = Object:extend()
 
-function Shield.new(self)
+function Shield:new()
   self.states = {}
   self.states.up = "up"
   self.states.down = "down"
@@ -28,7 +28,7 @@ function Shield.new(self)
   self.direction.target = 0
 end
 
-function Shield.update(self, delta)  
+function Shield:update(delta)  
   if self.state == self.states.up then
     -- up state
     self.direction.target = 0
@@ -52,7 +52,7 @@ function Shield.update(self, delta)
   )
 end
 
-function Shield.draw(self)
+function Shield:draw()
   love.graphics.print(self.state, 32, 32)
   
   love.graphics.push()
