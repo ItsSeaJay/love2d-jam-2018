@@ -37,7 +37,6 @@ function Spear:update(deltaTime)
   for other, delta in pairs(HC.collisions(self.hitbox)) do    
     if other.tag == "shield" or other.tag == "player" then
       self.destroyed = true
-      self.onDestroy()
     end
   end
 end
@@ -64,8 +63,4 @@ function Spear:draw()
       self.transform.size.height
     )
   love.graphics.pop()
-end
-
-function Spear:onDestroy()
-  
 end
