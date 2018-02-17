@@ -24,9 +24,9 @@ function love.load()
   -- player
   player = Player(love.graphics.getWidth() / 2, love.graphics.getHeight() / 2)
   
-  -- enemies
-  enemies = {}
-  enemies.test = Spear(love.graphics.getWidth() / 2, -32)
+  -- projectiles
+  projectiles = {}
+  table.insert(projectiles, Spear(love.graphics.getWidth() / 2, 32))
   
   -- debug
   debug = true
@@ -46,7 +46,13 @@ function love.update(deltaTime)
   
   -- update game objects
   player:update(deltaTime)
-  enemies.test:update(deltaTime)
+  
+  -- update projectiles
+  for i = #projectiles, 1, -1 do
+    local projectile = projectiles[i]
+    
+    projectile:update(deltaTime)
+  end
   
   -- destroy marked objects
   love.teardown()
@@ -61,9 +67,21 @@ function love.draw()
   -- draw game objects
   love.graphics.setColor(255, 255, 255)
   player:draw()
-  enemies.test:draw(delta)
+  
+  -- draw projectiles
+  for i = #projectiles, 1, -1 do
+    local projectile = projectiles[i]
+    
+    projectile:draw()
+  end
 end
 
 function love.teardown()
-  -- TODO: destroy enemies (not literally)
+  for i = #projectiles, 1, -1 do
+    local projectile = projectiles[i]
+    
+    if projectile.destroyed then
+      table.remove(projectiles, i)
+    end
+  end
 end
