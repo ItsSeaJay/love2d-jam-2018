@@ -1,9 +1,9 @@
 -- maths.lua
 
-maths = {}
+lerp = {}
 
-function maths.lerp(current, target, speed)
+function lerp.lerp(current, target, speed)
   return current * (1 - speed) + target * speed
 end
 
-return maths
+return lerp

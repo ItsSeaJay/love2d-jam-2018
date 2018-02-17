@@ -2,7 +2,28 @@
 
 Shield = Object:extend()
 
-function Shield:new()
+function Shield:new(x, y)
+  -- transform
+  self.position = {}
+  self.position.x = x
+  self.position.y = y
+  
+  self.size = {}
+  self.size.width = 64
+  self.size.height = 16
+  
+  self.origin = {}
+  self.origin.x = -self.size.width / 2
+  self.origin.y = -self.size.height / 2 - 64
+  
+  -- direction is measured in degrees
+  self.direction = {}
+  self.direction.current = 0
+  self.direction.target = 0
+  
+  self.speed = 16
+  
+  -- state machine
   self.states = {}
   self.states.up = "up"
   self.states.down = "down"
@@ -10,27 +31,10 @@ function Shield:new()
   self.states.right = "right"
   
   self.state = self.states.up
-  
-  self.position = {}
-  self.position.x = love.graphics.getWidth() / 2
-  self.position.y = love.graphics.getHeight() / 2
-  
-  self.size = {}
-  self.size.width = 32
-  self.size.height = 32
-  
-  self.origin = {}
-  self.origin.x = -self.size.width / 2
-  self.origin.y = -self.size.height / 2 - 64
-  
-  self.direction = {}
-  self.direction.current = 0 -- Measured in degrees
-  self.direction.target = 0
-  
-  self.speed = 8
 end
 
 function Shield:update(delta)  
+  -- state machine
   if self.state == self.states.up then
     -- up state
     self.direction.target = 0
@@ -45,18 +49,19 @@ function Shield:update(delta)
     self.direction.target = 90
   end
   
-  self.direction.current = maths.lerp(
+  self.direction.current = lerp.lerp(
     self.direction.current,
     self.direction.target,
     self.speed * delta
   )
 end
 
-function Shield:draw()
-  love.graphics.print(self.state, 32, 32)
-  
+function Shield:draw()  
   love.graphics.push()
-    love.graphics.translate(self.position.x, self.position.y)
+    love.graphics.translate(
+      self.position.x,
+      self.position.y
+    )
     love.graphics.rotate(math.rad(self.direction.current))
     love.graphics.rectangle(
       "fill",
