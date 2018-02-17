@@ -14,10 +14,6 @@ function Player:new(x, y)
   
   -- transform
   self.transform = Transform(x, y, 32, 32)
-  
-  self.origin = {}
-  self.origin.x = -self.transform.size.width / 2
-  self.origin.y = -self.transform.size.height / 2
 end
 
 function Player:update(delta)
@@ -42,8 +38,8 @@ function Player:draw()
     )
     love.graphics.rectangle(
       "fill",
-      self.origin.x,
-      self.origin.y,
+      self.transform.origin.x,
+      self.transform.origin.y,
       self.transform.size.width,
       self.transform.size.height
     )

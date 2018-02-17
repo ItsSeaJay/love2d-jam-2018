@@ -6,9 +6,8 @@ function Shield:new(x, y)
   -- transform
   self.transform = Transform(x, y, 64, 16)
   
-  self.origin = {}
-  self.origin.x = -self.transform.size.width / 2
-  self.origin.y = -self.transform.size.height / 2 - 64
+  -- origin
+  self.transform.origin.y = -self.transform.size.height / 2 -64
   
   -- direction is measured in degrees
   self.direction = {}
@@ -59,8 +58,8 @@ function Shield:draw()
     love.graphics.rotate(math.rad(self.direction.current))
     love.graphics.rectangle(
       "fill",
-      self.origin.x,
-      self.origin.y,
+      self.transform.origin.x,
+      self.transform.origin.y,
       self.transform.size.width,
       self.transform.size.height
     )
