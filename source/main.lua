@@ -13,9 +13,9 @@ function love.update(delta)
     love.event.quit()
   end
   
-  shield.update()
+  shield.update(shield, delta)
 end
 
 function love.draw()
-  shield.draw()
+  shield.draw(shield)
 end
