@@ -4,17 +4,11 @@ Shield = Object:extend()
 
 function Shield:new(x, y)
   -- transform
-  self.position = {}
-  self.position.x = x
-  self.position.y = y
-  
-  self.size = {}
-  self.size.width = 64
-  self.size.height = 16
+  self.transform = Transform(x, y, 64, 16)
   
   self.origin = {}
-  self.origin.x = -self.size.width / 2
-  self.origin.y = -self.size.height / 2 - 64
+  self.origin.x = -self.transform.size.width / 2
+  self.origin.y = -self.transform.size.height / 2 - 64
   
   -- direction is measured in degrees
   self.direction = {}
@@ -59,16 +53,16 @@ end
 function Shield:draw()  
   love.graphics.push()
     love.graphics.translate(
-      self.position.x,
-      self.position.y
+      self.transform.position.x,
+      self.transform.position.y
     )
     love.graphics.rotate(math.rad(self.direction.current))
     love.graphics.rectangle(
       "fill",
       self.origin.x,
       self.origin.y,
-      self.size.width,
-      self.size.height
+      self.transform.size.width,
+      self.transform.size.height
     )
   love.graphics.pop()
 end

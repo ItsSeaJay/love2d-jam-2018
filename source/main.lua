@@ -4,7 +4,9 @@ function love.load()
   -- requirements
   Object = require "classic"
   
+  require "transform"
   require "player"
+  require "spear"
   require "shield"
   require "lerp"
   
@@ -38,8 +40,18 @@ function love.update(delta)
   end
   
   player:update(delta)
+  
+  for enemy in pairs(enemies) do
+    -- enemy:update(delta)
+  end
+  
+  love.teardown()
 end
 
 function love.draw()
   player:draw()
+end
+
+function love.teardown()
+  -- TODO: destroy enemies (not literally)
 end

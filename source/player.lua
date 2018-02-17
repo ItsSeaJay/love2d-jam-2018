@@ -13,17 +13,11 @@ function Player:new(x, y)
   self.inputs.right = "d"
   
   -- transform
-  self.position = {}
-  self.position.x = x
-  self.position.y = y
-  
-  self.size = {}
-  self.size.width = 32
-  self.size.height = 32
+  self.transform = Transform(x, y, 32, 32)
   
   self.origin = {}
-  self.origin.x = -self.size.width / 2
-  self.origin.y = -self.size.height / 2
+  self.origin.x = -self.transform.size.width / 2
+  self.origin.y = -self.transform.size.height / 2
 end
 
 function Player:update(delta)
@@ -43,15 +37,15 @@ end
 function Player:draw()
   love.graphics.push()
     love.graphics.translate(
-      self.position.x,
-      self.position.y
+      self.transform.position.x,
+      self.transform.position.y
     )
     love.graphics.rectangle(
       "fill",
       self.origin.x,
       self.origin.y,
-      self.size.width,
-      self.size.height
+      self.transform.size.width,
+      self.transform.size.height
     )
   love.graphics.pop()
   

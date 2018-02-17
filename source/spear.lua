@@ -2,6 +2,14 @@
 
 Spear = Object:extend()
 
-function Spear:new(x, y)
+function Spear:new()
+  self.destroyed = false
+end
+
+function Spear:update()
+
+end
+
+function Spear:draw()
   
 end
