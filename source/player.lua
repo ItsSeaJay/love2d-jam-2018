@@ -7,9 +7,9 @@ function Player:new()
 end
 
 function Player:update(delta)
-  -- TODO: allow player to update shield
+  self.shield:update(delta)
 end
 
 function Player:draw()
-  -- TODO: draw player
+  self.sheild:draw()
 end

@@ -8,7 +8,6 @@ function love.load()
   require "maths"
   
   player = Player()
-  shield = Shield()
   
   debug = true
 end
@@ -26,10 +25,8 @@ function love.update(delta)
   end
   
   player:update(delta)
-  shield:update(delta)
 end
 
 function love.draw()
   player:draw()
-  shield:draw()
 end
