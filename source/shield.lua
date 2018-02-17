@@ -32,6 +32,7 @@ function Shield:new(x, y)
     self.transform.size.width,
     self.transform.size.height
   )
+  self.tag = "shield"
 end
 
 function Shield:update(deltaTime)  
@@ -56,6 +57,7 @@ function Shield:update(deltaTime)
     self.direction.target,
     self.speed * deltaTime
   )
+  self.hitbox:rotate(self.direction.current)
 end
 
 function Shield:draw()

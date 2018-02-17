@@ -18,6 +18,7 @@ function Spear:new(x, y)
     self.transform.size.width,
     self.transform.size.height
   )
+  self.tag = "spear"
 end
 
 function Spear:update(deltaTime)
@@ -29,9 +30,13 @@ function Spear:update(deltaTime)
   self.transform.position.x = self.transform.position.x + self.velocity.x
   self.transform.position.y = self.transform.position.y + self.velocity.y
   
+  self.hitbox:moveTo(self.transform.position.x, self.transform.position.y)
+  
   -- check for collisions
   for other, delta in pairs(HC.collisions(self.hitbox)) do
-    print("Collision")
+    if other.tag == "shield" then
+      self.destroyed = true
+    end
   end
 end
 
