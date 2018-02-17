@@ -21,7 +21,7 @@ function love.load()
   
   -- enemies
   enemies = {}
-  enemies.test = Spear(love.graphics.getWidth() / 2, -128)
+  enemies.test = Spear(love.graphics.getWidth() / 2, -256)
   
   -- debug
   debug = true
