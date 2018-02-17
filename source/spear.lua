@@ -11,6 +11,13 @@ function Spear:new(x, y)
   self.velocity = {}
   self.velocity.x = 0
   self.velocity.y = 0
+  
+  self.hitbox = HC.rectangle(
+    self.transform.position.x,
+    self.transform.position.y,
+    self.transform.size.x,
+    self.transform.size.y
+  )
 end
 
 function Spear:update(delta)

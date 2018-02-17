@@ -2,8 +2,11 @@
 
 function love.load()
   -- requirements
-  Object = require "classic"
+  -- 3rd party
+  Object = require "libraries/classic"
+  HC = require "libraries/HC"
   
+  -- 1st party
   require "transform"
   require "player"
   require "spear"

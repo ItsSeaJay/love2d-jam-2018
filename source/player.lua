@@ -17,6 +17,7 @@ function Player:new(x, y)
 end
 
 function Player:update(delta)
+  -- reposition the player's shield when keys are pressed
   if love.keyboard.isDown(self.inputs.up) then
     self.shield.state = self.shield.states.up
   elseif love.keyboard.isDown(self.inputs.down) then
