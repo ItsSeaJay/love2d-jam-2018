@@ -21,7 +21,7 @@ function love.load()
   
   -- enemies
   enemies = {}
-  enemies.test = Spear()
+  enemies.test = Spear(love.graphics.getWidth() / 2, 32)
   
   -- debug
   debug = true
@@ -41,15 +41,16 @@ function love.update(delta)
   
   player:update(delta)
   
-  for enemy in pairs(enemies) do
-    -- enemy:update(delta)
-  end
+  enemies.test:update(delta)
   
+  -- destroy marked objects
   love.teardown()
 end
 
 function love.draw()
   player:draw()
+  
+  enemies.test:draw(delta)
 end
 
 function love.teardown()
