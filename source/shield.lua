@@ -27,8 +27,8 @@ function Shield:new(x, y)
   
   -- hitbox
   self.hitbox = HC.rectangle(
-    self.transform.position.x,
-    self.transform.position.y,
+    self.transform.position.x + self.transform.origin.x,
+    self.transform.position.y + self.transform.origin.y,
     self.transform.size.width,
     self.transform.size.height
   )
@@ -50,6 +50,7 @@ function Shield:update(deltaTime)
     self.direction.target = 90
   end
   
+  -- lerp direction towards target
   self.direction.current = lerp.lerp(
     self.direction.current,
     self.direction.target,
@@ -57,8 +58,16 @@ function Shield:update(deltaTime)
   )
 end
 
-function Shield:draw()  
+function Shield:draw()
+  -- debug hitbox
+  if debug then
+    love.graphics.setColor(255, 0, 0)
+    self.hitbox:draw('line')
+  end
+  
+  -- draw the shield
   love.graphics.push()
+    love.graphics.setColor(255, 255, 255)
     love.graphics.translate(
       self.transform.position.x,
       self.transform.position.y

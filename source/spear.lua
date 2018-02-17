@@ -13,8 +13,8 @@ function Spear:new(x, y)
   self.velocity.y = 0
   
   self.hitbox = HC.rectangle(
-    self.transform.position.x,
-    self.transform.position.y,
+    self.transform.position.x + self.transform.origin.x,
+    self.transform.position.y + self.transform.origin.y,
     self.transform.size.width,
     self.transform.size.height
   )
@@ -28,10 +28,22 @@ function Spear:update(deltaTime)
   
   self.transform.position.x = self.transform.position.x + self.velocity.x
   self.transform.position.y = self.transform.position.y + self.velocity.y
+  
+  -- check for collisions
+  for other, delta in pairs(HC.collisions(self.hitbox)) do
+    print("Collision")
+  end
 end
 
 function Spear:draw()
+  -- draw hitbox
+  if debug then
+    love.graphics.setColor(255, 0, 0)
+    self.hitbox:draw('line')
+  end
+  
   love.graphics.push()
+    love.graphics.setColor(255, 255, 255)
     love.graphics.translate(
       self.transform.position.x,
       self.transform.position.y

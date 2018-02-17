@@ -1,5 +1,7 @@
 -- main.lua
 
+console = {}
+
 function love.load()
   -- requirements
   -- 3rd party
@@ -51,7 +53,17 @@ function love.update(deltaTime)
 end
 
 function love.draw()
+  -- debug messages
+  if debug then
+    -- print console
+    for i = 1, #console do
+      love.graphics.setColor(255, 255, 255, 255 - (i - 1) * 6)
+      love.graphics.print(console[#console - (i - 1)], 10, i * 15)
+    end
+  end
+  
   -- draw game objects
+  love.graphics.setColor(255, 255, 255)
   player:draw()
   enemies.test:draw(delta)
 end
