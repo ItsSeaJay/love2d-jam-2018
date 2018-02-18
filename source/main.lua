@@ -48,8 +48,9 @@ function love.update(deltaTime)
     end
   end
   
-  -- update game objects
+  -- update game state machine
   if game.state == game.states.playing then
+    -- update the player an
     player:update(deltaTime)
     army:update(deltaTime)
   elseif game.state == game.states.paused then
@@ -75,4 +76,15 @@ function love.draw()
 end
 
 function love.teardown()
+end
+
+function love.keypressed(key)
+  if key == "p" then
+    -- toggle paused state
+    if game.state == game.states.playing then
+      game.state = game.states.paused
+    elseif game.state == game.states.paused then
+      game.state = game.states.playing
+    end
+  end
 end
