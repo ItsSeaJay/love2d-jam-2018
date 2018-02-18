@@ -35,7 +35,7 @@ function Shield:new(x, y)
   self.hitbox = HC.rectangle(
     self.transform.position.x + self.transform.origin.x,
     self.transform.position.y + self.transform.origin.y,
-    self.transform.size.width / 2,
+    self.transform.size.width,
     self.transform.size.height
   )
   self.hitbox.tag = "shield"
@@ -46,11 +46,7 @@ function Shield:update(deltaTime)
   -- the shield should always take the shortest route to its target
   if self.state == self.states.up then
     -- up state
-    if self.direction.target >= 180 then
-      self.direction.target = 360
-    else
-      self.direction.target = 0
-    end
+    self.direction.target = 0
   elseif self.state == self.states.down then
     -- down state
     self.direction.target = 180
@@ -133,4 +129,15 @@ function rotateAround(cx, cy, angle)
   point.y = ynew + cx
   
   return point
+end
+
+-- truncate any angle (in radians) into [-pi, pi] range
+function limitAngle (angle)
+  local sign = (angle > 0 and 1 or -1)
+
+  while math.abs(angle) > math.pi do
+    angle = angle - 2 * math.pi * sign
+  end
+  
+  return angle
 end
