@@ -44,12 +44,12 @@ function Army:update(deltaTime)
     -- do debug stuff...
   end
   
-  -- update all troops
+  -- update all enlisted troops
   for key, troop in ipairs(self.troops) do
     troop:update(deltaTime)
   end
   
-  -- tick timer
+  -- tick timer downward
   self.timer = math.max(self.timer - deltaTime, 0)
   
   if self.timer == 0 then
@@ -57,7 +57,6 @@ function Army:update(deltaTime)
     self.timer = self.difficulty
   end
   
-  -- remove destroyed troops
   self:teardown()
 end
 

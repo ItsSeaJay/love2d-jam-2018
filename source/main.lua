@@ -21,6 +21,11 @@ function love.load()
   game = {}
   game.title = "LÖVE Jam 2018"
   
+  game.states = {}
+  game.states.playing = "playing"
+  game.states.paused = "paused"
+  game.state = game.states.playing
+  
   love.window.setTitle(game.title)
   
   -- player
@@ -44,23 +49,29 @@ function love.update(deltaTime)
   end
   
   -- update game objects
-  player:update(deltaTime)
-  army:update(deltaTime)
+  if game.state == game.states.playing then
+    player:update(deltaTime)
+    army:update(deltaTime)
+  elseif game.state == game.states.paused then
+    
+  end
   
   -- destroy marked objects
   love.teardown()
 end
 
-function love.draw()
-  -- debug messages
-  if debug then
-    
-  end
-  
+function love.draw()  
   -- draw game objects
-  love.graphics.setColor(255, 255, 255)
-  player:draw()
-  army:draw()
+  if game.state == game.states.playing then
+    player:draw()
+    army:draw()
+  elseif game.state == game.states.paused then
+    love.graphics.print(
+      "Paused",
+      love.graphics.getWidth() / 2,
+      love.graphics.getHeight() / 2
+    )
+  end
 end
 
 function love.teardown()
