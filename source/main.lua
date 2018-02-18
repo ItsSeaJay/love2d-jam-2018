@@ -7,6 +7,7 @@ function love.load()
   -- 3rd party
   Object = require "libraries/classic"
   HC = require "libraries/HC"
+  easing = require "libraries/easing"
   
   -- 1st party
   require "transform"
