@@ -35,31 +35,13 @@ function Army:new()
   )
   
   -- spawn in test spear
-  table.insert(
-    self.troops,
-    Spear(
-      self.points.bottom.position.x,
-      self.points.bottom.position.y,
-      0,
-      128
-    )
-  )
+  self:enlist()
 end
 
 function Army:update(deltaTime)
   -- debug controls
   if debug then
-    if love.keyboard.isDown("space") then
-      table.insert(
-        self.troops,
-        Spear(
-          self.points.bottom.position.x,
-          self.points.bottom.position.y,
-          0,
-          128
-        )
-      )
-    end
+    -- do debug stuff...
   end
   
   -- update all troops
@@ -82,4 +64,16 @@ function Army:draw(deltaTime)
   for key, troop in ipairs(self.troops) do
     troop:draw()
   end
+end
+
+function Army:enlist()
+  table.insert(
+    self.troops,
+    Spear(
+      self.points.bottom.position.x,
+      self.points.bottom.position.y,
+      0,
+      128
+    )
+  )
 end
