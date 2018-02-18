@@ -33,6 +33,9 @@ function Player:new(x, y)
   
   -- lives
   self.lives = 3
+  
+  -- score
+  self.score = 0
 end
 
 function Player:update(deltaTime)
@@ -70,6 +73,9 @@ function Player:draw()
     -- life count
     love.graphics.setColor(255, 255, 255)
     love.graphics.print(self.lives, 32, 32)
+    
+    -- score
+    love.graphics.print(self.score, 32, 96)
   end  
   
   -- draw the player themselves
