@@ -35,7 +35,7 @@ function Shield:new(x, y)
   self.hitbox = HC.rectangle(
     self.transform.position.x + self.transform.origin.x,
     self.transform.position.y + self.transform.origin.y,
-    self.transform.size.width / 3,
+    self.transform.size.width / 2,
     self.transform.size.height
   )
   self.hitbox.tag = "shield"
@@ -43,9 +43,14 @@ end
 
 function Shield:update(deltaTime)  
   -- state machine
+  -- the shield should always take the shortest route to its target
   if self.state == self.states.up then
     -- up state
-    self.direction.target = 0
+    if self.direction.target >= 180 then
+      self.direction.target = 360
+    else
+      self.direction.target = 0
+    end
   elseif self.state == self.states.down then
     -- down state
     self.direction.target = 180
@@ -78,10 +83,14 @@ function Shield:update(deltaTime)
 end
 
 function Shield:draw()
-  -- debug hitbox
   if debug then
+    -- hitbox
     love.graphics.setColor(255, 0, 0)
     self.hitbox:draw('line')
+    
+    -- state
+    love.graphics.setColor(255, 255, 255)
+    love.graphics.print(self.state, 64, 32)
   end
   
   -- draw the shield

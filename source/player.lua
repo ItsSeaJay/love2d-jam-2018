@@ -30,6 +30,9 @@ function Player:new(x, y)
     self.transform.size.height
   )
   self.hitbox.tag = "player"
+  
+  -- lives
+  self.lives = 3
 end
 
 function Player:update(deltaTime)
@@ -45,13 +48,28 @@ function Player:update(deltaTime)
   end
   
   self.shield:update(deltaTime)
+  
+  -- check for collisions
+  for other, delta in pairs(HC.collisions(self.hitbox)) do 
+    -- TODO: better collisions
+  end
+  
+  -- death
+  if self.lives <= 0 then
+    self.die()
+  end
 end
 
 function Player:draw()
-  -- debug hitbox
+  -- debug drawing
   if debug then
+    -- hitbox
     love.graphics.setColor(255, 0, 0)
     self.hitbox:draw('line')
+    
+    -- life count
+    love.graphics.setColor(255, 255, 255)
+    love.graphics.print(self.lives, 32, 32)
   end  
   
   -- draw the player themselves
@@ -75,4 +93,8 @@ function Player:draw()
   love.graphics.pop()
   
   self.shield:draw()
+end
+
+function Player:die()
+  game.state = game.states.over
 end

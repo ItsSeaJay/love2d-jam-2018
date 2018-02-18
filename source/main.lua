@@ -17,13 +17,14 @@ function love.load()
   require "range"
   require "lerp"
   
-  -- game information
   game = {}
   game.title = "LÖVE Jam 2018"
   
   game.states = {}
   game.states.playing = "playing"
   game.states.paused = "paused"
+  game.states.over = "over"
+  
   game.state = game.states.playing
   
   love.window.setTitle(game.title)
@@ -69,6 +70,12 @@ function love.draw()
   elseif game.state == game.states.paused then
     love.graphics.print(
       "Paused",
+      love.graphics.getWidth() / 2,
+      love.graphics.getHeight() / 2
+    )
+  elseif game.state == game.states.over then
+    love.graphics.print(
+      "Game Over",
       love.graphics.getWidth() / 2,
       love.graphics.getHeight() / 2
     )

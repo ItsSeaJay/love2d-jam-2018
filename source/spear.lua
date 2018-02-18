@@ -18,7 +18,7 @@ function Spear:new(x, y, direction, speed)
     self.transform.size.width,
     self.transform.size.height
   )
-  self.tag = "spear"
+  self.tag = "troop"
 end
 
 function Spear:update(deltaTime)
@@ -34,10 +34,12 @@ function Spear:update(deltaTime)
   self.hitbox:moveTo(self.transform.position.x, self.transform.position.y)
   
   -- check for collisions
-  for other, delta in pairs(HC.collisions(self.hitbox)) do  
-    if other.tag == "shield" or other.tag == "player" then
-      self.destroyed = true
+  for other, delta in pairs(HC.collisions(self.hitbox)) do 
+    if other.tag == "player" then
+      player.lives = math.max(player.lives - 1, 0)
     end
+    
+    self.destroyed = true
   end
 end
 
