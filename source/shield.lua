@@ -9,12 +9,15 @@ function Shield:new(x, y)
   -- origin
   self.transform.origin.y = -self.transform.size.height / 2 -64
   
-  -- direction is measured in degrees
-  self.direction = {}
-  self.direction.current = 0
-  self.direction.target = 0
+  -- turning
+  -- (direction is measured in degrees)
+  self.direction = 0
   
-  self.speed = 16
+  self.lerpTime = 0.3  
+  self.lerpTimer = self.lerpTime
+  
+  self.lerpTo = 0
+  self.lerpFrom = 0
   
   -- colour
   self.colour = {}
@@ -39,42 +42,30 @@ function Shield:new(x, y)
     self.transform.size.height
   )
   self.hitbox.tag = "shield"
+  
+  turnTo(math.pi)
 end
 
-function Shield:update(deltaTime)  
-  -- state machine
-  -- the shield should always take the shortest route to its target
-  if self.state == self.states.up then
-    -- up state
-    self.direction.target = 0
-  elseif self.state == self.states.down then
-    -- down state
-    self.direction.target = 180
-  elseif self.state == self.states.left then
-    -- left state
-    self.direction.target = 270
-  elseif self.state == self.states.right then
-    -- right state
-    self.direction.target = 90
+function Shield:update(deltaTime)
+  -- lerp direction towards target
+  -- the shield must take the shortest possible path
+  if self.lerpTimer < self.lerpTime then
+    self.lerpTimer = math.min(self.lerpTime, self.lerpTimer + deltaTime)
   end
   
-  -- lerp direction towards target
-  -- take the shortest possible path
-  self.direction.current = lerp.lerp(
-    self.direction.current,
-    self.direction.target + getDifference(
-      math.rad(self.direction.target),
-      math.rad(self.direction.current)
-    ),
-    self.speed * deltaTime
+  self.direction = easing.inOutQuad(
+    self.lerpTimer,
+    self.lerpFrom,
+    self.lerpTo - self.lerpFrom,
+    self.lerpTime
   )
   
   -- move hitbox with shield
-  self.hitbox:setRotation(math.rad(self.direction.current))
+  self.hitbox:setRotation(self.direction)
   local pivot = rotateAround(
     0,
     64,
-    math.rad(self.direction.current)
+    self.direction
   )
   self.hitbox:moveTo(
     pivot.x + self.transform.position.x,
@@ -104,7 +95,7 @@ function Shield:draw()
       self.transform.position.x,
       self.transform.position.y
     )
-    love.graphics.rotate(math.rad(self.direction.current))
+    love.graphics.rotate(self.direction)
     love.graphics.rectangle(
       "fill",
       self.transform.origin.x,
@@ -147,4 +138,25 @@ function getDifference(a, b)
   end
   
   return difference
+end
+
+function turnTo(toR)
+  self.lerpTo = toR
+  self.lerpTimer = 0
+  
+  -- adjust lerpFrom when looping
+  self.lerpFrom = r
+  
+  if (lerpTo - lerpFrom) > math.pi then
+    self.lerpFrom = self.lerpFrom + math.pi * 2
+  elseif (self.lerpFrom - self.lerpTo) > math.pi then
+    self.lerpFrom = self.lerpFrom - math.pi * 2
+  end
+end
+
+function getNormalized(r) -- use this when doing calculations!
+	r = math.fmod(r + math.pi, math.pi * 2 ) - math.pi
+  r = math.fmod(r - math.pi, math.pi * 2 ) + math.pi
+  
+  return r
 end
