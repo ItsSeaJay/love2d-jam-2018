@@ -39,11 +39,7 @@ end
 
 function love.update(deltaTime)
   -- debug controls
-  if debug then
-    if love.keyboard.isDown("escape") then
-      love.event.quit()
-    end
-    
+  if debug then    
     if love.keyboard.isDown("f5") then
       love.load()
     end
@@ -86,12 +82,17 @@ function love.teardown()
 end
 
 function love.keypressed(key)
-  if key == "p" then
-    -- toggle paused state
-    if game.state == game.states.playing then
+  if game.state == game.states.playing then
+    if key == "escape" then
       game.state = game.states.paused
-    elseif game.state == game.states.paused then
+    end
+  elseif game.state == game.states.paused then
+    if key == "escape" then
       game.state = game.states.playing
+    end
+  elseif game.state == game.states.over then
+    if key == "space" then
+      love.load()
     end
   end
 end
