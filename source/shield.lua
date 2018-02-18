@@ -59,9 +59,13 @@ function Shield:update(deltaTime)
   end
   
   -- lerp direction towards target
+  -- take the shortest possible path
   self.direction.current = lerp.lerp(
     self.direction.current,
-    self.direction.target,
+    self.direction.target - getDifference(
+      math.rad(self.direction.target),
+      math.rad(self.direction.current)
+    ),
     self.speed * deltaTime
   )
   
@@ -131,13 +135,16 @@ function rotateAround(cx, cy, angle)
   return point
 end
 
--- truncate any angle (in radians) into [-pi, pi] range
-function limitAngle (angle)
-  local sign = (angle > 0 and 1 or -1)
-
-  while math.abs(angle) > math.pi do
-    angle = angle - 2 * math.pi * sign
+function getDifference(a, b)
+  local difference = a - b
+  
+  while difference > math.pi do
+    difference = difference - 2 * math.pi
   end
   
-  return angle
+  while difference < -math.pi do
+    difference = difference + 2 * math.pi
+  end
+  
+  return difference
 end

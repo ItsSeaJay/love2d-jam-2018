@@ -35,7 +35,10 @@ function Spear:update(deltaTime)
   
   -- check for collisions
   for other, delta in pairs(HC.collisions(self.hitbox)) do 
-    if other.tag == "player" or other.tag == "shield" then
+    if other.tag == "player" then
+      self.destroyed = true
+      player.lives = math.max(player.lives - 1, 0)
+    elseif other.tag == "shield" then
       self.destroyed = true
     end
   end
