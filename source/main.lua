@@ -88,6 +88,7 @@ function love.keypressed(key)
       game.state = game.states.paused
     end
     
+    -- handle player input
     player:keypressed(key)
   elseif game.state == game.states.paused then
     if key == "escape" then

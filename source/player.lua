@@ -85,6 +85,7 @@ function Player:draw()
 end
 
 function Player:keypressed(key)
+  -- move the shield when keys are pressed
   if key == player.inputs.up then
     self.shield:turnTo(0)
   elseif key == player.inputs.down then

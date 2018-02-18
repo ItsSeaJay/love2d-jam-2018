@@ -13,7 +13,7 @@ function Shield:new(x, y)
   -- (direction is measured in degrees)
   self.direction = 0
   
-  self.lerpTime = 0.3  
+  self.lerpTime = 0.16  
   self.lerpTimer = self.lerpTime
   
   self.lerpTo = 0
@@ -29,7 +29,7 @@ function Shield:new(x, y)
   self.hitbox = HC.rectangle(
     self.transform.position.x + self.transform.origin.x,
     self.transform.position.y + self.transform.origin.y,
-    self.transform.size.width,
+    self.transform.size.width / 3,
     self.transform.size.height
   )
   self.hitbox.tag = "shield"
