@@ -3,7 +3,6 @@
 Army = Object:extend()
 
 function Army:new()
-  
   self.transform = Transform(0, 0, 1, 1)
   self.troops = {}
   
@@ -34,8 +33,10 @@ function Army:new()
     1
   )
   
-  -- spawn in test spear
-  self:enlist()
+  if debug then
+    -- spawn test spear
+    self:enlist(Spear, self.points.right)
+  end
 end
 
 function Army:update(deltaTime)
@@ -66,14 +67,30 @@ function Army:draw(deltaTime)
   end
 end
 
-function Army:enlist()
+function Army:enlist(kind, position)
+  local direction = 0
+  
+  if position == self.points.top.position then
+    -- go down
+    direction = 180
+  elseif position == self.points.top.position then
+    -- go up
+    direction = 0
+  elseif position == self.points.left.position then
+    -- go right
+    direction = 90
+  elseif position == self.points.right.position then
+    -- go left
+    direction = 90
+  end
+  
   table.insert(
     self.troops,
-    Spear(
-      self.points.bottom.position.x,
-      self.points.bottom.position.y,
-      0,
-      128
+    kind(
+      position.x,
+      position.y,
+      direction,
+      32
     )
   )
 end
