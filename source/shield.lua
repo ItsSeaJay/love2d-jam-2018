@@ -87,12 +87,10 @@ function Shield:draw()
       self.transform.position.y
     )
     love.graphics.rotate(self.direction)
-    love.graphics.rectangle(
-      "fill",
+    love.graphics.draw(
+      self.sprite,
       self.transform.origin.x,
-      self.transform.origin.y,
-      self.transform.size.width,
-      self.transform.size.height
+      self.transform.origin.y
     )
   love.graphics.pop()
 end
