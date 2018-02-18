@@ -33,6 +33,9 @@ function Shield:new(x, y)
     self.transform.size.height
   )
   self.hitbox.tag = "shield"
+  
+  -- sprite
+  self.sprite = love.graphics.newImage("resources/graphics/shield.png")
 end
 
 function Shield:update(deltaTime)
