@@ -34,7 +34,7 @@ function Spear:update(deltaTime)
   self.hitbox:moveTo(self.transform.position.x, self.transform.position.y)
   
   -- check for collisions
-  for other, delta in pairs(HC.collisions(self.hitbox)) do    
+  for other, delta in pairs(HC.collisions(self.hitbox)) do  
     if other.tag == "shield" or other.tag == "player" then
       self.destroyed = true
     end

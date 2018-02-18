@@ -33,6 +33,17 @@ function Army:new()
     1,
     1
   )
+  
+  -- spawn in test spear
+  table.insert(
+    self.troops,
+    Spear(
+      self.points.bottom.position.x,
+      self.points.bottom.position.y,
+      0,
+      128
+    )
+  )
 end
 
 function Army:update(deltaTime)
@@ -57,8 +68,9 @@ function Army:update(deltaTime)
   end
   
   -- remove destroyed troops
-  for i = #self.troops, -1 do
-    troop = self.troops[i]
+  for i = #self.troops, 1, -1 do
+    -- get a local instance of the troop
+    local troop = self.troops[i]
     
     if troop.destroyed then
       table.remove(self.troops, i)
