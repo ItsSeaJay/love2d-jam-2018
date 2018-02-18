@@ -25,15 +25,6 @@ function Shield:new(x, y)
   self.colour.green = 255
   self.colour.blue = 255
   
-  -- state machine
-  self.states = {}
-  self.states.up = "up"
-  self.states.down = "down"
-  self.states.left = "left"
-  self.states.right = "right"
-  
-  self.state = self.states.up
-  
   -- hitbox
   self.hitbox = HC.rectangle(
     self.transform.position.x + self.transform.origin.x,
@@ -43,7 +34,7 @@ function Shield:new(x, y)
   )
   self.hitbox.tag = "shield"
   
-  turnTo(math.pi)
+  self:turnTo(math.pi)
 end
 
 function Shield:update(deltaTime)
@@ -140,21 +131,21 @@ function getDifference(a, b)
   return difference
 end
 
-function turnTo(toR)
+function Shield:turnTo(toR)
   self.lerpTo = toR
   self.lerpTimer = 0
   
   -- adjust lerpFrom when looping
-  self.lerpFrom = r
+  self.lerpFrom = self.direction
   
-  if (lerpTo - lerpFrom) > math.pi then
+  if (self.lerpTo - self.lerpFrom) > math.pi then
     self.lerpFrom = self.lerpFrom + math.pi * 2
   elseif (self.lerpFrom - self.lerpTo) > math.pi then
     self.lerpFrom = self.lerpFrom - math.pi * 2
   end
 end
 
-function getNormalized(r) -- use this when doing calculations!
+function Shield:getNormalized(r) -- use this when doing calculations!
 	r = math.fmod(r + math.pi, math.pi * 2 ) - math.pi
   r = math.fmod(r - math.pi, math.pi * 2 ) + math.pi
   
