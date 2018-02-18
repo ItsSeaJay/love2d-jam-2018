@@ -36,15 +36,6 @@ function Army:new()
   -- difficulty
   self.difficulty = 1
   self.timer = self.difficulty
-  
-  -- debug start
-  if debug then
-    -- spawn test spear
-    self:enlist(
-      Spear,
-      self:getRandomPoint()
-    )
-  end
 end
 
 function Army:update(deltaTime)
@@ -62,7 +53,7 @@ function Army:update(deltaTime)
   self.timer = math.max(self.timer - deltaTime, 0)
   
   if self.timer == 0 then
-    self:enlist(Spear, self.points.top)
+    self:enlist(Spear, self:getRandomPoint())
     self.timer = self.difficulty
   end
   
@@ -131,9 +122,7 @@ function Army:getRandomPoint()
   end
   
   -- return a random index
-  local index = math.ceil(math.random() * #points)
+  local selected = math.floor(math.random() * #points + 1)
   
-  print(index)
-  
-  return points[index]
+  return points[selected]
 end

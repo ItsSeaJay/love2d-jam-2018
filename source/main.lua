@@ -1,5 +1,7 @@
 -- main.lua
 
+math.randomseed(os.time())
+
 function love.load()
   -- requirements
   -- 3rd party
@@ -27,8 +29,6 @@ function love.load()
   
   -- debug
   debug = true
-  
-  math.randomseed(os.time())
 end
 
 function love.update(deltaTime)
