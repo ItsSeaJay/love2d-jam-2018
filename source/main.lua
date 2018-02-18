@@ -15,6 +15,7 @@ function love.load()
   require "range"
   require "lerp"
   
+  -- game information
   game = {}
   game.title = "LÖVE Jam 2018"
   
@@ -26,6 +27,8 @@ function love.load()
   
   -- debug
   debug = true
+  
+  math.randomseed(os.time())
 end
 
 function love.update(deltaTime)

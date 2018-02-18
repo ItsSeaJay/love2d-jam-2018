@@ -33,16 +33,18 @@ function Army:new()
     1
   ).position
   
+  -- difficulty
+  self.difficulty = 1
+  self.timer = self.difficulty
+  
+  -- debug start
   if debug then
     -- spawn test spear
     self:enlist(
       Spear,
-      self.points.right
+      self:getRandomPoint()
     )
   end
-  
-  self.difficulty = 1
-  self.timer = self.difficulty
 end
 
 function Army:update(deltaTime)
@@ -115,4 +117,23 @@ function Army:enlist(kind, position)
       128
     )
   )
+end
+
+function Army:getRandomPoint()
+  local points = {}
+  
+  -- make a copy of the spawn points using numerical keys
+  for key, point in pairs(self.points) do
+    table.insert(
+      points,
+      point
+    )
+  end
+  
+  -- return a random index
+  local index = math.ceil(math.random() * #points)
+  
+  print(index)
+  
+  return points[index]
 end
