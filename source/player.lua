@@ -2,7 +2,8 @@
 
 Player = Object:extend()
 
-function Player:new(x, y)  
+function Player:new(x, y)
+  -- shield
   self.shield = Shield(x, y)
   
   -- inputs
@@ -14,6 +15,12 @@ function Player:new(x, y)
   
   -- transform
   self.transform = Transform(x, y, 32, 32)
+  
+  -- colour
+  self.colour = {}
+  self.colour.red = 255
+  self.colour.green = 255
+  self.colour.blue = 255
 end
 
 function Player:update(deltaTime)
@@ -33,6 +40,11 @@ end
 
 function Player:draw()
   love.graphics.push()
+    love.graphics.setColor(
+      self.colour.red,
+      self.colour.green,
+      self.colour.blue
+    )
     love.graphics.translate(
       self.transform.position.x,
       self.transform.position.y

@@ -16,6 +16,12 @@ function Shield:new(x, y)
   
   self.speed = 16
   
+  -- colour
+  self.colour = {}
+  self.colour.red = 255
+  self.colour.green = 255
+  self.colour.blue = 255
+  
   -- state machine
   self.states = {}
   self.states.up = "up"
@@ -80,7 +86,11 @@ function Shield:draw()
   
   -- draw the shield
   love.graphics.push()
-    love.graphics.setColor(255, 255, 255)
+    love.graphics.setColor(
+      self.colour.red,
+      self.colour.green,
+      self.colour.blue
+    )
     love.graphics.translate(
       self.transform.position.x,
       self.transform.position.y

@@ -13,30 +13,36 @@ function Army:new()
     -32,
     1,
     1
-  )
+  ).position
   self.points.bottom = Transform(
     love.graphics.getWidth() / 2,
     love.graphics.getHeight() + 32,
     1,
     1
-  )
+  ).position
   self.points.left = Transform(
     -32,
     love.graphics.getHeight() / 2,
     1,
     1
-  )
+  ).position
   self.points.right = Transform(
-    love.graphics.getHeight() / 2,
     love.graphics.getWidth() + 32,
+    love.graphics.getHeight() / 2,
     1,
     1
-  )
+  ).position
   
   if debug then
     -- spawn test spear
-    self:enlist(Spear, self.points.right)
+    self:enlist(
+      Spear,
+      self.points.right
+    )
   end
+  
+  self.difficulty = 1
+  self.timer = self.difficulty
 end
 
 function Army:update(deltaTime)
@@ -50,15 +56,16 @@ function Army:update(deltaTime)
     troop:update(deltaTime)
   end
   
-  -- remove destroyed troops
-  for i = #self.troops, 1, -1 do
-    -- get a local instance of the troop
-    local troop = self.troops[i]
-    
-    if troop.destroyed then
-      table.remove(self.troops, i)
-    end
+  -- tick timer
+  self.timer = math.max(self.timer - deltaTime, 0)
+  
+  if self.timer == 0 then
+    self:enlist(Spear, self.points.top)
+    self.timer = self.difficulty
   end
+  
+  -- remove destroyed troops
+  self:teardown()
 end
 
 function Army:draw(deltaTime)
@@ -67,30 +74,45 @@ function Army:draw(deltaTime)
   end
 end
 
+function Army:teardown()
+  for i = #self.troops, 1, -1 do
+    -- get a local instance of the troop
+    local troop = self.troops[i]
+    
+    if troop.destroyed then
+      -- remove that troop
+      table.remove(self.troops, i)
+    end
+  end
+end
+
 function Army:enlist(kind, position)
   local direction = 0
   
-  if position == self.points.top.position then
+  -- figure out where that troop should move towards
+  -- based on where it spawned
+  if position == self.points.top then
     -- go down
     direction = 180
-  elseif position == self.points.top.position then
+  elseif position == self.points.top then
     -- go up
     direction = 0
-  elseif position == self.points.left.position then
+  elseif position == self.points.left then
     -- go right
     direction = 90
-  elseif position == self.points.right.position then
+  elseif position == self.points.right then
     -- go left
-    direction = 90
+    direction = 270
   end
   
+  -- enlist that kind of troop
   table.insert(
     self.troops,
     kind(
       position.x,
       position.y,
       direction,
-      32
+      128
     )
   )
 end

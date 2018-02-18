@@ -12,6 +12,7 @@ function love.load()
   require "army"
   require "spear"
   require "shield"
+  require "range"
   require "lerp"
   
   game = {}
