@@ -35,7 +35,7 @@ function Shield:new(x, y)
   self.hitbox = HC.rectangle(
     self.transform.position.x + self.transform.origin.x,
     self.transform.position.y + self.transform.origin.y,
-    self.transform.size.width,
+    self.transform.size.width / 3,
     self.transform.size.height
   )
   self.hitbox.tag = "shield"
