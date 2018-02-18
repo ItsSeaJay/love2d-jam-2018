@@ -15,6 +15,7 @@ function Player:new(x, y)
   
   -- transform
   self.transform = Transform(x, y, 32, 32)
+  self.direction = 0
   
   -- colour
   self.colour = {}
@@ -36,6 +37,9 @@ function Player:new(x, y)
   
   -- score
   self.score = 0
+  
+  -- sprite
+  self.sprite = love.graphics.newImage("resources/graphics/knight.png")
 end
 
 function Player:update(deltaTime)  
@@ -72,12 +76,15 @@ function Player:draw()
       self.transform.position.x,
       self.transform.position.y
     )
-    love.graphics.rectangle(
-      "fill",
-      self.transform.origin.x,
-      self.transform.origin.y,
-      self.transform.size.width,
-      self.transform.size.height
+    love.graphics.draw(
+      self.sprite, -- sprite
+      self.transform.origin.x, -- position x
+      self.transform.origin.y, -- position y
+      self.direction, -- rotation
+      1, -- width
+      1, -- height
+      self.sprite:getWidth() / 3, -- origin x
+      self.sprite:getHeight() / 3 -- origin y
     )
   love.graphics.pop()
   

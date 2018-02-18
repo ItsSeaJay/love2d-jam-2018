@@ -19,6 +19,8 @@ function Spear:new(x, y, direction, speed)
     self.transform.size.height
   )
   self.tag = "troop"
+  
+  self.sprite = love.graphics.newImage("resources/graphics/spear.png")
 end
 
 function Spear:update(deltaTime)
@@ -59,12 +61,10 @@ function Spear:draw()
       self.transform.position.y
     )
     love.graphics.rotate(math.rad(self.direction))
-    love.graphics.rectangle(
-      "fill",
-      self.transform.origin.x,
-      self.transform.origin.y,
-      self.transform.size.width,
-      self.transform.size.height
+    love.graphics.draw(
+      self.sprite,
+      self.transform.origin.x - (self.sprite:getWidth() / 3),
+      self.transform.origin.y
     )
   love.graphics.pop()
 end
