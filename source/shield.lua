@@ -33,8 +33,6 @@ function Shield:new(x, y)
     self.transform.size.height
   )
   self.hitbox.tag = "shield"
-  
-  self:turnTo(math.pi)
 end
 
 function Shield:update(deltaTime)
@@ -72,7 +70,6 @@ function Shield:draw()
     
     -- state
     love.graphics.setColor(255, 255, 255)
-    love.graphics.print(self.state, 64, 32)
   end
   
   -- draw the shield

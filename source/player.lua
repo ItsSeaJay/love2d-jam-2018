@@ -38,26 +38,9 @@ function Player:new(x, y)
   self.score = 0
 end
 
-function Player:update(deltaTime)
-  -- reposition the player's shield when keys are pressed
-  if love.keyboard.isDown(self.inputs.up) then
-    self.shield.state = self.shield.states.up
-  elseif love.keyboard.isDown(self.inputs.down) then
-    self.shield.state = self.shield.states.down
-  elseif love.keyboard.isDown(self.inputs.left) then
-    self.shield.state = self.shield.states.left
-  elseif love.keyboard.isDown(self.inputs.right) then
-    self.shield.state = self.shield.states.right
-  end
-  
+function Player:update(deltaTime)  
   self.shield:update(deltaTime)
   
-  -- check for collisions
-  for other, delta in pairs(HC.collisions(self.hitbox)) do 
-    -- TODO: better collisions
-  end
-  
-  -- death
   if self.lives <= 0 then
     self.die()
   end
@@ -99,6 +82,18 @@ function Player:draw()
   love.graphics.pop()
   
   self.shield:draw()
+end
+
+function Player:keypressed(key)
+  if key == player.inputs.up then
+    self.shield:turnTo(0)
+  elseif key == player.inputs.down then
+    self.shield:turnTo(math.pi)
+  elseif key == player.inputs.left then
+    self.shield:turnTo(math.pi * 1.5)
+  elseif key == player.inputs.right then
+    self.shield:turnTo(math.pi * 0.5)
+  end
 end
 
 function Player:die()
