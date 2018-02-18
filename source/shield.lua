@@ -62,7 +62,7 @@ function Shield:update(deltaTime)
   -- take the shortest possible path
   self.direction.current = lerp.lerp(
     self.direction.current,
-    self.direction.target - getDifference(
+    self.direction.target + getDifference(
       math.rad(self.direction.target),
       math.rad(self.direction.current)
     ),
