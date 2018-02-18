@@ -21,6 +21,15 @@ function Player:new(x, y)
   self.colour.red = 255
   self.colour.green = 255
   self.colour.blue = 255
+  
+  -- hitbox
+  self.hitbox = HC.rectangle(
+    self.transform.position.x + self.transform.origin.x,
+    self.transform.position.y + self.transform.origin.y,
+    self.transform.size.width,
+    self.transform.size.height
+  )
+  self.hitbox.tag = "player"
 end
 
 function Player:update(deltaTime)
@@ -39,6 +48,13 @@ function Player:update(deltaTime)
 end
 
 function Player:draw()
+  -- debug hitbox
+  if debug then
+    love.graphics.setColor(255, 0, 0)
+    self.hitbox:draw('line')
+  end  
+  
+  -- draw the player themselves
   love.graphics.push()
     love.graphics.setColor(
       self.colour.red,

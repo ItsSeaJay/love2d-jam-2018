@@ -50,7 +50,7 @@ function love.update(deltaTime)
   
   -- update game state machine
   if game.state == game.states.playing then
-    -- update the player an
+    -- update the player and army
     player:update(deltaTime)
     army:update(deltaTime)
   elseif game.state == game.states.paused then
