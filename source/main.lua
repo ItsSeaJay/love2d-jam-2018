@@ -37,6 +37,9 @@ function love.load()
   
   courtyard = love.graphics.newImage("resources/graphics/courtyard.png")
   
+  fonts = {}
+  fonts.m5x7 = love.graphics.newFont("resources/fonts/m5x7.ttf", 64)
+  
   player = Player(love.graphics.getWidth() / 2, love.graphics.getHeight() / 2)
   army = Army()
   
@@ -108,6 +111,14 @@ function love.draw()
       1,
       titles.paused:getWidth() / 2,
       titles.paused:getHeight() / 2
+    )
+    
+    -- information
+    love.graphics.setFont(fonts.m5x7)
+    love.graphics.print(
+      "Press escape to continue.",
+      love.graphics.getWidth() / 2 - 256,
+      love.graphics.getHeight() / 2
     )
   elseif game.state == game.states.over then
     love.graphics.setColor(255, 0, 0)
