@@ -41,9 +41,11 @@ function Spear:update(deltaTime)
       self.destroyed = true
       player.lives = math.max(player.lives - 1, 0)
       player.damageTime = player.damageTimer
+      sounds.hurt:play()
     elseif other.tag == "shield" then
       self.destroyed = true
       player.score = player.score + 1
+      sounds.block:play()
     end
   end
 end

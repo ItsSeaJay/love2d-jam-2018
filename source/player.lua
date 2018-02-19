@@ -124,4 +124,5 @@ end
 
 function Player:die()
   game.state = game.states.over
+  sounds.death:play()
 end

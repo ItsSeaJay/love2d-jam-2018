@@ -87,6 +87,8 @@ end
 function Army:enlist(kind, position)
   local direction = 0
   
+  sounds.throw:play()
+  
   -- figure out where that troop should move towards
   -- based on where it spawned
   if position == self.points.top then

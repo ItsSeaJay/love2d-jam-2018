@@ -48,6 +48,13 @@ function love.load()
   player = Player(love.graphics.getWidth() / 2, love.graphics.getHeight() / 2)
   army = Army()
   
+  sounds = {}
+  sounds.death = love.audio.newSource("resources/audio/death.wav", "static")
+  sounds.pause = love.audio.newSource("resources/audio/pause.wav", "static")
+  sounds.block = love.audio.newSource("resources/audio/shield-block.wav", "static")
+  sounds.hurt = love.audio.newSource("resources/audio/hurt.wav", "static")
+  sounds.throw = love.audio.newSource("resources/audio/throw.wav", "static")
+  
   debug = false
 end
 
@@ -207,6 +214,7 @@ function love.keypressed(key)
   elseif game.state == game.states.playing then
     if key == "escape" then
       game.state = game.states.paused
+      sounds.pause:play()
     end
     -- handle player input
     player:keypressed(key)
