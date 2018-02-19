@@ -26,6 +26,9 @@ function love.load()
   
   game.state = game.states.playing
   
+  deathFlashTimer = 0.1
+  deathFlashTime = deathFlashTimer
+  
   love.window.setTitle(game.title)
   
   tiles = {}
@@ -34,6 +37,7 @@ function love.load()
   
   titles = {}
   titles.paused = love.graphics.newImage("resources/graphics/paused.png")
+  titles.slain = love.graphics.newImage("resources/graphics/slain.png")
   
   courtyard = love.graphics.newImage("resources/graphics/courtyard.png")
   
@@ -62,10 +66,9 @@ function love.update(deltaTime)
     army:update(deltaTime)
   elseif game.state == game.states.paused then
     
+  elseif game.state == game.states.over then
+    deathFlashTime = math.max(deathFlashTime - deltaTime, 0)
   end
-  
-  -- destroy marked objects
-  love.teardown()
 end
 
 function love.draw()  
@@ -121,7 +124,8 @@ function love.draw()
       love.graphics.getHeight() / 2
     )
   elseif game.state == game.states.over then
-    love.graphics.setColor(255, 0, 0)
+    -- background
+    love.graphics.setColor(208, 70, 72)
     love.graphics.rectangle(
       "fill",
       0,
@@ -130,15 +134,62 @@ function love.draw()
       love.graphics.getHeight()
     )
     love.graphics.setColor(255, 255, 255)
-    love.graphics.print(
-      "Game Over",
+    
+    -- title
+    love.graphics.draw(
+      titles.slain,
+      (love.graphics.getWidth() / 2),
+      (love.graphics.getHeight() / 2),
+      0,
+      1,
+      1,
+      titles.paused:getWidth() / 2,
+      titles.paused:getHeight() / 2
+    )
+    
+    -- information
+    love.graphics.setFont(fonts.m5x7)
+    
+    -- react to the player's score
+    if player.score > 0 then
+      love.graphics.printf(
+      "...but you managed to block " ..
+        player.score ..
+        " spears.",
+      love.graphics.getWidth() / 2 - 258,
+      love.graphics.getHeight() - 256,
       love.graphics.getWidth() / 2,
-      love.graphics.getHeight() / 2
+      "left"
+    )
+  else
+    love.graphics.printf(
+      "...horribly.",
+      love.graphics.getWidth() / 2 - 128,
+      love.graphics.getHeight() - 200,
+      love.graphics.getWidth() / 2,
+      "left"
     )
   end
-end
-
-function love.teardown()
+    
+    love.graphics.print(
+      "press escape to restart",
+      love.graphics.getWidth() / 2 - 258,
+      love.graphics.getHeight() - 128
+    )
+    
+    -- flash
+    if deathFlashTime > 0 then
+      love.graphics.setColor(255, 255, 255)
+      love.graphics.rectangle(
+        "fill",
+        0,
+        0,
+        love.graphics.getWidth(),
+        love.graphics.getHeight()
+      )
+      love.graphics.setColor(255, 255, 255)
+    end
+  end
 end
 
 function love.keypressed(key)
@@ -154,8 +205,25 @@ function love.keypressed(key)
       game.state = game.states.playing
     end
   elseif game.state == game.states.over then
-    if key == "space" then
-      love.load()
+    if key == "escape" then
+      reset()
     end
   end
+end
+
+function reset()
+  game.state = game.states.playing
+  
+  player.lives = 3
+  player.score = 0
+  
+  player.shield.direction = 0
+  
+  -- clear enemy troops
+  for i in pairs (army.troops) do
+    army.troops [i] = nil
+  end
+  
+  army.difficulty = 4
+  army.speedup = 10
 end

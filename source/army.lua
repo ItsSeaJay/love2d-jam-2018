@@ -34,8 +34,10 @@ function Army:new()
   ).position
   
   -- difficulty
-  self.difficulty = 1
+  self.difficulty = 3
   self.timer = self.difficulty
+  self.speedup = 10
+  self.decay = 1
 end
 
 function Army:update(deltaTime)
@@ -49,12 +51,19 @@ function Army:update(deltaTime)
     troop:update(deltaTime)
   end
   
-  -- tick timer downward
+  -- tick timers downward
   self.timer = math.max(self.timer - deltaTime, 0)
   
   if self.timer == 0 then
     self:enlist(Spear, self:getRandomPoint())
-    self.timer = self.difficulty
+    self.timer = self.difficulty + ((math.random() * self.difficulty) - self.difficulty / 2)
+  end
+  
+  self.speedup = math.max(self.speedup - deltaTime, 0)
+  
+  if self.speedup == 0 then
+    self.difficulty = self.difficulty * (1 - self.decay)
+    self.speedup = 10
   end
   
   self:teardown()
@@ -124,4 +133,8 @@ function Army:getRandomPoint()
   local selected = math.floor(math.random() * #points + 1)
   
   return points[selected]
+end
+
+function Army:resetTimer()
+  
 end
