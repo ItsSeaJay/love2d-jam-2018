@@ -34,10 +34,11 @@ function Army:new()
   ).position
   
   -- difficulty
-  self.difficulty = 3
+  self.difficulty = 3 -- lower values are harder
   self.timer = self.difficulty
   self.speedup = 10
-  self.decay = 1
+  self.decay = 0.33
+  self.speed = 128
 end
 
 function Army:update(deltaTime)
@@ -45,6 +46,8 @@ function Army:update(deltaTime)
   if debug then
     -- do debug stuff...
   end
+  
+  self.speed = self.speed + (deltaTime * 0.1)
   
   -- update all enlisted troops
   for key, troop in ipairs(self.troops) do
@@ -56,14 +59,17 @@ function Army:update(deltaTime)
   
   if self.timer == 0 then
     self:enlist(Spear, self:getRandomPoint())
-    self.timer = self.difficulty + ((math.random() * self.difficulty) - self.difficulty / 2)
+    self.timer = self.difficulty + (math.random() * self.difficulty / 2)
   end
   
-  self.speedup = math.max(self.speedup - deltaTime, 0)
+  self.speedup = math.max(self.speedup, 0)
   
   if self.speedup == 0 then
-    self.difficulty = self.difficulty * (1 - self.decay)
     self.speedup = 10
+    self.difficulty = math.max(
+      self.difficulty - (1 * self.decay),
+      0.33
+    )
   end
   
   self:teardown()
@@ -113,7 +119,7 @@ function Army:enlist(kind, position)
       position.x,
       position.y,
       direction,
-      128
+      self.speed
     )
   )
 end
