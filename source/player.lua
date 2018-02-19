@@ -40,6 +40,10 @@ function Player:new(x, y)
   
   -- image
   self.image = love.graphics.newImage("resources/graphics/knight1.png")
+  
+  -- damage
+  self.damageTimer = 0.33
+  self.damageTime = 0
 end
 
 function Player:update(deltaTime)  
@@ -48,6 +52,8 @@ function Player:update(deltaTime)
   if self.lives <= 0 then
     self.die()
   end
+  
+  self.damageTime = math.max(self.damageTime - deltaTime, 0)
 end
 
 function Player:draw()
@@ -63,15 +69,29 @@ function Player:draw()
     
     -- score
     love.graphics.print(self.score, 32, 96)
-  end  
+  end 
+  
+  -- draw the life count
+  love.graphics.setFont(fonts.m5x7)
+  love.graphics.print(
+    self.lives,
+    love.graphics.getWidth() / 2 - 16,
+    love.graphics.getHeight() / 2
+  )
   
   -- draw the player themselves
-  love.graphics.push()
+  if self.damageTime > 0 then
+    love.graphics.setColor(255, 0, 0)
+  else
     love.graphics.setColor(
       self.colour.red,
       self.colour.green,
       self.colour.blue
     )
+  end
+  
+  
+  love.graphics.push()
     love.graphics.translate(
       self.transform.position.x,
       self.transform.position.y

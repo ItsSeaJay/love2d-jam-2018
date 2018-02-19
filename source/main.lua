@@ -216,6 +216,7 @@ function reset()
   
   player.lives = 3
   player.score = 0
+  player.damageTimer = 0
   
   player.shield.direction = 0
   
@@ -224,6 +225,9 @@ function reset()
     army.troops [i] = nil
   end
   
-  army.difficulty = 4
-  army.speedup = 10
+  army.difficulty = 1 -- lower values are harder
+  army.timer = army.difficulty
+  army.speed = 128
+  army.speedup = 2
+  army.maxspeed = 512
 end
