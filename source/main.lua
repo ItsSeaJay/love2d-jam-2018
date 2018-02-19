@@ -24,7 +24,7 @@ function love.load()
   game.states.paused = "paused"
   game.states.over = "over"
   
-  game.state = game.states.playing
+  game.state = game.states.title
   
   deathFlashTimer = 0.1
   deathFlashTime = deathFlashTimer
@@ -36,6 +36,7 @@ function love.load()
   tiles.bricks = love.graphics.newImage("resources/graphics/big-bricks.png")
   
   titles = {}
+  titles.main = love.graphics.newImage("resources/graphics/title-screen.png")
   titles.paused = love.graphics.newImage("resources/graphics/paused.png")
   titles.slain = love.graphics.newImage("resources/graphics/slain.png")
   
@@ -67,13 +68,19 @@ function love.update(deltaTime)
   elseif game.state == game.states.paused then
     
   elseif game.state == game.states.over then
-    deathFlashTime = math.max(deathFlashTime - deltaTime, 0)
+    deathFlashTime = math.max(deathFlashTime - deltaTime, 0)    
   end
 end
 
 function love.draw()  
   -- draw game objects
-  if game.state == game.states.playing then
+  if game.state == game.states.title then
+    love.graphics.draw(
+      titles.main,
+      0,
+      0
+    )
+  elseif game.state == game.states.playing then
     -- Courtyard
     love.graphics.draw(
       courtyard,
@@ -193,11 +200,14 @@ function love.draw()
 end
 
 function love.keypressed(key)
-  if game.state == game.states.playing then
+  if game.state == game.states.title then
+    if key == "escape" then
+      reset()
+    end
+  elseif game.state == game.states.playing then
     if key == "escape" then
       game.state = game.states.paused
     end
-    
     -- handle player input
     player:keypressed(key)
   elseif game.state == game.states.paused then

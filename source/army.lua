@@ -37,7 +37,7 @@ function Army:new()
   self.difficulty = 1 -- lower values are harder
   self.timer = self.difficulty
   self.speed = 128
-  self.speedup = 2
+  self.speedup = 4
   self.maxspeed = 512
 end
 

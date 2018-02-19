@@ -80,18 +80,16 @@ function Player:draw()
   )
   
   -- draw the player themselves
-  if self.damageTime > 0 then
-    love.graphics.setColor(255, 0, 0)
-  else
-    love.graphics.setColor(
-      self.colour.red,
-      self.colour.green,
-      self.colour.blue
-    )
-  end
-  
-  
   love.graphics.push()
+    if self.damageTime > 0 then
+      love.graphics.setColor(255, 0, 0)
+    else
+      love.graphics.setColor(
+        self.colour.red,
+        self.colour.green,
+        self.colour.blue
+      )
+    end
     love.graphics.translate(
       self.transform.position.x,
       self.transform.position.y
@@ -113,13 +111,13 @@ end
 
 function Player:keypressed(key)
   -- move the shield when keys are pressed
-  if key == player.inputs.up then
+  if key == player.inputs.up or key == "up" then
     self.shield:turnTo(0)
-  elseif key == player.inputs.down then
+  elseif key == player.inputs.down or key == "down" then
     self.shield:turnTo(math.pi)
-  elseif key == player.inputs.left then
+  elseif key == player.inputs.left or key == "left" then
     self.shield:turnTo(math.pi * 1.5)
-  elseif key == player.inputs.right then
+  elseif key == player.inputs.right or key == "right" then
     self.shield:turnTo(math.pi * 0.5)
   end
 end
