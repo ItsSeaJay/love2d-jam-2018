@@ -3,14 +3,11 @@
 math.randomseed(os.time())
 
 function love.load()
-  -- requirements
-  -- 3rd party
   Object = require "libraries/classic"
   HC = require "libraries/HC"
   easing = require "libraries/easing"
   anim8 = require "libraries/anim8"
   
-  -- 1st party
   require "transform"
   require "player"
   require "army"
@@ -19,7 +16,6 @@ function love.load()
   require "range"
   require "lerp"
   
-  -- game
   game = {}
   game.title = "LÖVE Jam 2018"
   
@@ -32,24 +28,25 @@ function love.load()
   
   love.window.setTitle(game.title)
   
-  -- tiles
   tiles = {}
   tiles.cobblestone = love.graphics.newImage("resources/graphics/cobblestone.png")
+  tiles.bricks = love.graphics.newImage("resources/graphics/big-bricks.png")
   
-  -- courtyard
+  titles = {}
+  titles.paused = love.graphics.newImage("resources/graphics/paused.png")
+  
   courtyard = love.graphics.newImage("resources/graphics/courtyard.png")
   
-  -- player
   player = Player(love.graphics.getWidth() / 2, love.graphics.getHeight() / 2)
   army = Army()
   
-  -- debug
   debug = false
 end
 
 function love.update(deltaTime)
   -- debug controls
-  if debug then    
+  if debug then
+    -- allow a quick restart
     if love.keyboard.isDown("f5") then
       love.load()
     end
@@ -82,12 +79,46 @@ function love.draw()
     player:draw()
     army:draw()
   elseif game.state == game.states.paused then
-    love.graphics.print(
-      "Paused",
-      love.graphics.getWidth() / 2,
-      love.graphics.getHeight() / 2
+    -- calculate sin wave
+    local wave = {}
+    wave.crest = math.sin(love.timer.getTime())
+    wave.height = 16
+    local offset = 128
+    
+    -- background
+    for x = 0, 16, 1 do
+      for y = 0, 16, 1 do
+        love.graphics.draw(
+          tiles.bricks,
+          x * tiles.bricks:getWidth(),
+          y * tiles.bricks:getHeight()
+        )
+      end
+    end
+    
+    -- title
+    love.graphics.draw(
+      titles.paused,
+      (love.graphics.getWidth() / 2),
+      (love.graphics.getHeight() / 2) + 
+        (wave.crest * wave.height) - 
+        offset,
+      0,
+      1,
+      1,
+      titles.paused:getWidth() / 2,
+      titles.paused:getHeight() / 2
     )
   elseif game.state == game.states.over then
+    love.graphics.setColor(255, 0, 0)
+    love.graphics.rectangle(
+      "fill",
+      0,
+      0,
+      love.graphics.getWidth(),
+      love.graphics.getHeight()
+    )
+    love.graphics.setColor(255, 255, 255)
     love.graphics.print(
       "Game Over",
       love.graphics.getWidth() / 2,
