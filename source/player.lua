@@ -39,8 +39,7 @@ function Player:new(x, y)
   self.score = 0
   
   -- image
-  self.spritesheet = love.graphics.newImage("resources/graphics/knight.png")
-  
+  self.image = love.graphics.newImage("resources/graphics/knight1.png")
 end
 
 function Player:update(deltaTime)  

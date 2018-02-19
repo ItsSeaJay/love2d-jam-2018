@@ -19,6 +19,7 @@ function love.load()
   require "range"
   require "lerp"
   
+  -- game
   game = {}
   game.title = "LÖVE Jam 2018"
   
@@ -31,12 +32,19 @@ function love.load()
   
   love.window.setTitle(game.title)
   
+  -- tiles
+  tiles = {}
+  tiles.cobblestone = love.graphics.newImage("resources/graphics/cobblestone.png")
+  
+  -- courtyard
+  courtyard = love.graphics.newImage("resources/graphics/courtyard.png")
+  
   -- player
   player = Player(love.graphics.getWidth() / 2, love.graphics.getHeight() / 2)
   army = Army()
   
   -- debug
-  debug = true
+  debug = false
 end
 
 function love.update(deltaTime)
@@ -63,6 +71,14 @@ end
 function love.draw()  
   -- draw game objects
   if game.state == game.states.playing then
+    -- Courtyard
+    love.graphics.draw(
+      courtyard,
+      0,
+      0
+    )
+    
+    -- game entities
     player:draw()
     army:draw()
   elseif game.state == game.states.paused then
