@@ -4,7 +4,7 @@ math.randomseed(os.time())
 
 function love.load()
   Object = require "libraries/classic"
-  HC = require "libraries/HC"
+  HC = require "libraries/hc"
   easing = require "libraries/easing"
   anim8 = require "libraries/anim8"
   
